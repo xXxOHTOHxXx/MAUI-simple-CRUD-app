@@ -1,19 +1,12 @@
 ﻿using System.Globalization;
 
-namespace _253502.UI.ValueConverters
+namespace _253502.Garnik.ValueConverters
 {
-    internal class TickerPriceToColorValueConverter : IValueConverter
+    public class IsNullConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            const decimal TICKET_MAX_PRICE = 150;
-
-            if ((decimal)value < TICKET_MAX_PRICE)
-            {
-                return Colors.LightPink;
-            }
-
-            return Colors.WhiteSmoke;
+            return value != null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -9,45 +9,34 @@ namespace _253502.Persistence.Repository
 {
     public class FakeUnitOfWork : IUnitOfWork
     {
-        private readonly AppDbContext _context;
-        private IRepository<Author> _authorRepository;
-        private IRepository<Book> _bookRepository;
+        private readonly FakeAuthorRepository _authorRepository;
+        private readonly FakeBookRepository _bookRepository;
 
-        public FakeUnitOfWork(AppDbContext context)
+        public FakeUnitOfWork()
         {
-            _context = context;
+            _authorRepository = new();
+            _bookRepository = new();
         }
 
-        public IRepository<Author> AuthorRepository
+        public IRepository<Author> AuthorRepository => _authorRepository;
+
+        public IRepository<Book> BookRepository => _bookRepository;
+
+        public Task CreateDataBaseAsync()
         {
-            get
-            {
-                return _authorRepository ??= new FakeAuthorRepository();
-            }
+            throw new NotImplementedException();
         }
 
-        public IRepository<Book> BookRepository
+        public Task DeleteDataBaseAsync()
         {
-            get
-            {
-                return _bookRepository ??= new FakeBookRepository();
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task SaveAllAsync()
+        public Task SaveAllAsync()
         {
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteDataBaseAsync()
-        {
-            await _context.Database.EnsureDeletedAsync();
-        }
-
-        public async Task CreateDataBaseAsync()
-        {
-            await _context.Database.EnsureCreatedAsync();
+            throw new NotImplementedException();
         }
     }
-
 }
+
+

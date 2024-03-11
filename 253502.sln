@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "253502.UI", "253502.Garnik\253502.UI.csproj", "{0290A06F-8221-4768-B15F-96E1B5993E0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "253502.Garnik", "253502.Garnik\253502.Garnik.csproj", "{0290A06F-8221-4768-B15F-96E1B5993E0B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "253502.Domain", "253502.Domain\253502.Domain.csproj", "{5DF8CD54-A460-4B8A-BEB5-5A5C16ED7605}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "253502.Application", "253502.Application\253502.Application.csproj", "{BDCE1CBF-A57A-4AEC-87CD-88C6B6EE7BF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "253502.Persistence", "253502.Persistence\253502.Persistence.csproj", "{D36B5715-C357-4D43-A4E0-0EF6AFE51340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "253502.Persistence", "253502.Persistence\253502.Persistence.csproj", "{D36B5715-C357-4D43-A4E0-0EF6AFE51340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

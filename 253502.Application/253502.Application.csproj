@@ -21,18 +21,14 @@
 
 	<ItemGroup>
 		<PackageReference Include="MediatR" Version="12.2.0" />
+		<PackageReference Include="MediatR.Contracts" Version="2.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\253502.Domain\253502.Domain.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="AuthorUseCases\Commands\" />
-	  <Folder Include="BookUseCases\Commands\" />
-	  <Folder Include="BookUseCases\Queries\" />
+	  <ProjectReference Include="..\253502.Persistence\253502.Persistence.csproj" />
 	</ItemGroup>
 
 </Project>

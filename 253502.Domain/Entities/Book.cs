@@ -21,11 +21,10 @@ namespace _253502.Domain.Entities
             Rating = rate.Value;
         }
         // Имя и дата рождения описаны в отдельном классе
-        public BookInfo InfoData { get; private set; }
-        // Средний балл
-        public double Rating { get; private set; }
+        public BookInfo InfoData { get; set; }
+        public double Rating { get; set; }
         // Идентификатор курса
-        public int? AuthorID { get; private set; }
+        public int? AuthorID { get; set; }
         /// <summary>
         /// Зачислить на курс
         /// </summary>

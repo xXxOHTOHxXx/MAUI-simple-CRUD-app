@@ -2,11 +2,45 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="_253502.Garnik.Pages.BooksPage"
-             Title="BooksPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:_253502.Garnik.ValueConverters"
+             xmlns:models="clr-namespace:_253502.Garnik.ViewModels"
+             xmlns:entities="clr-namespace:_253502.Domain.Entities;assembly=253502.Domain"
+             x:DataType="models:BookViewModel"
+             Title="Books">
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Commands">
+            <MenuFlyoutItem Text="Edit" Command="{Binding UpdateBookCommand}"></MenuFlyoutItem>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+    <ContentPage.Resources>
+        <converters:IdToImageSourceConverter x:Key="IdToImageSource"/>
+    </ContentPage.Resources>
+    <VerticalStackLayout Margin="10" Spacing="15">
+        <Image
+                Source="{Binding Book.Id, Converter={StaticResource IdToImageSource}}"
+                HeightRequest="200"
+                HorizontalOptions="Center">
+        </Image>
+        <Frame HorizontalOptions="Center">
+            <VerticalStackLayout>
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Name:"/>
+                    <Label Text="{Binding Book.InfoData.Name}"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Rating:"/>
+                    <Label Text="{Binding Book.Rating}"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Description:"/>
+                    <Label Text="{Binding Book.InfoData.DateOfPublishment}"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </Frame>
+       
     </VerticalStackLayout>
 </ContentPage>

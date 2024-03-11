@@ -21,9 +21,9 @@ namespace _253502.Domain.Entities
         }
         public string Name { get; set; }
 
-        public DateTime DateOfBirth { get; private set; }
+        public DateTime DateOfBirth { get; set; }
 
-        public int FavoriteNumber { get; private set; }
+        public int FavoriteNumber { get; set; }
 
         public IReadOnlyList<Book> Books
         {

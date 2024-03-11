@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace _253502.UI.ValueConverters
+namespace _253502.Garnik.ValueConverters
 {
     internal class IdToImageSourceConverter : IValueConverter
     {
@@ -9,7 +9,7 @@ namespace _253502.UI.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             int id = (int)value;
-            string path = Preferences.Default.Get<string>("LocalData", null);
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
 
             if (path == null)
             {

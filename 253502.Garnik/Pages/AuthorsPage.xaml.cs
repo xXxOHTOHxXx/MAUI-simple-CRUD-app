@@ -2,12 +2,11 @@ using _253502.Garnik.ViewModels;
 using _253502.Garnik;
 namespace _253502.Garnik.Pages;
 
-public partial class BooksPage : ContentPage
+public partial class AuthorsPage : ContentPage
 {
-    public BooksPage(BookViewModel viewModel)//
-    {
+    public AuthorsPage(AuthorViewModel viewModel)//
+    {     
         InitializeComponent();
-
         BindingContext = viewModel;
     }
 }

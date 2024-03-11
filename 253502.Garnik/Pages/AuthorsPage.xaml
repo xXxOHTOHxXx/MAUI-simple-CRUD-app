@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:_253502.Garnik.ViewModels"
+             xmlns:converters="clr-namespace:_253502.Garnik.ValueConverters"
+             xmlns:entities="clr-namespace:_253502.Domain.Entities;assembly=253502.Domain"
+             x:DataType="models:AuthorViewModel"
+             x:Class="_253502.Garnik.Pages.AuthorsPage"
+             x:Name="authorpage"
+             Title="Authors">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Loaded" 
+                                        Command="{Binding UpdateGroupListCommand}"/>
+        <toolkit:EventToCommandBehavior EventName="Loaded" 
+                                        Command="{Binding UpdateMembersListCommand}"/>
+    </ContentPage.Behaviors>
+    
+    <ContentPage.Resources>
+        <converters:RateToColorValueConverter x:Key="RateToColor"/>
+        <converters:IsNullConverter x:Key="IsNotNull"/>
+        <converters:IdToImageSourceConverter x:Key="IdToImageSource"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.MenuBarItems>
+        <!-- workaround for https://github.com/dotnet/maui/issues/10835 -->
+        <MenuBarItem Text="Commands" BindingContext="{Binding Path=BindingContext, Source={x:Reference authorpage}}">
+            <MenuFlyoutItem Text="Add author" Command="{Binding AddAuthorCommand}"/>
+            <MenuFlyoutItem Text="Update author" Command="{Binding UpdateAuthorCommand}"/>
+            <MenuFlyoutItem Text="Add book" Command="{Binding AddBookCommand}"/>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+    <StackLayout Margin="10" Spacing="15">
+        <HorizontalStackLayout>
+            <Picker
+                ItemsSource="{Binding Authors}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedAuthor}">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                Command="{Binding UpdateMembersListCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+
+            <Frame BackgroundColor="Crimson" IsVisible="{Binding SelectedAuthor, Converter={StaticResource IsNotNull}}">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Spacing="5">
+                        <Label Text="Name:"/>
+                        <Label Text="{Binding SelectedAuthor.Name}"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="5">
+                        <Label Text="Favorite number:"/>
+                        <Label Text="{Binding SelectedAuthor.FavoriteNumber}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+        </HorizontalStackLayout>
+
+        <CollectionView ItemsSource="{Binding Books}" IsVisible="{Binding SelectedAuthor, Converter={StaticResource IsNotNull}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="entities:Book">
+                    <Frame Margin="5" Padding="5" BackgroundColor="{Binding Rating, Converter={StaticResource RateToColor}}"><!--BackgroundColor="{Binding Rating, Converter={StaticResource RateToColor}}"-->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type models:AuthorViewModel}},
+                                Path=ShowDetailsCommand}" 
+                                CommandParameter="{Binding}"/>
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="3">
+                            <Frame Margin="5"
+                                   BorderColor="Black"
+                                   CornerRadius="50"
+                                   HeightRequest="110"
+                                   WidthRequest="110"
+                                   IsClippedToBounds="True" 
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="70"
+                                    WidthRequest="70"
+                                Source="{Binding Id, Converter={StaticResource IdToImageSource}}"></Image>
+                            </Frame>
+
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                                <Label Text="{Binding InfoData.Name}" TextColor="Black"/>
+                                <Label Text="{Binding InfoData.DateOfPublishment}" TextColor="Black"/>
+                                <Label Text="{Binding Rating}" TextColor="Black"/>
+                            </VerticalStackLayout>
+
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+    </StackLayout>
+    
+</ContentPage>

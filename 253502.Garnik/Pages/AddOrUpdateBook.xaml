@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_253502.Garnik.Pages.AddOrUpdateBook"
+             xmlns:converters="clr-namespace:_253502.Garnik.ValueConverters"
+             xmlns:models="clr-namespace:_253502.Garnik.ViewModels"
+             xmlns:entities="clr-namespace:_253502.Domain.Entities;assembly=253502.Domain"
+             x:DataType="models:AddOrUpdateBookViewModel"
+             Title="AddOrUpdateBook">
+    <ContentPage.Resources>
+        <converters:RateToColorValueConverter x:Key="RateToColor"/>
+        <converters:IsNullConverter x:Key="IsNotNull"/>
+        <converters:IdToImageSourceConverter x:Key="IdToImageSource"/>
+    </ContentPage.Resources>
+    
+    <StackLayout Margin="10" Spacing="15">
+        <HorizontalStackLayout>
+            <Button Text="Pick a png image!" Command="{Binding PickImageCommand}"/>
+            <Label Text="Succesfully added" IsVisible="{Binding Image, Converter={StaticResource IsNotNull}}"/>
+        </HorizontalStackLayout>
+        <VerticalStackLayout>
+            <Label Text="Name"/>
+            <Entry Text="{Binding BookToUpsert.InfoData.Name}" Placeholder="Name"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Label Text="Date of publishment"/>
+            <Entry Text="{Binding BookToUpsert.InfoData.DateOfPublishment}" Placeholder="Date"/>
+        </VerticalStackLayout>
+    
+        <VerticalStackLayout>
+            <Label Text="Rating"/>
+            <Entry Text="{Binding BookToUpsert.Rating}" Placeholder="0"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Label Text="AuthorID"/>
+            <Entry Text="{Binding BookToUpsert.AuthorID}" Placeholder="0"/>
+        </VerticalStackLayout>
+
+        <Button Text="Save" Command="{Binding AddOrUpdateBookCommand}"/>
+    </StackLayout>
+</ContentPage>

@@ -5,16 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:_253502.Garnik"
     xmlns:pages="clr-namespace:_253502.Garnik.Pages"
-    Shell.FlyoutBehavior="Disabled"
-    Title="_253502.Garnik">
+    Title="Lab5">
 
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
     <ShellContent
-        Title="Cources list"
-        ContentTemplate="{DataTemplate pages:BooksPage}"
-        Route="Cources" />
+        Title="Authors list"
+        ContentTemplate="{DataTemplate pages:AuthorsPage}"
+        Route="AuthorsPage" />
 
 </Shell>

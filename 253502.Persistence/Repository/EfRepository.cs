@@ -46,17 +46,17 @@ namespace _253502.Persistence.Repository
                 }
             }
 
-            query.Where((e) => e.Id == id);
+            query = query.Where((e) => e.Id == id);
 
             return await query.FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<IReadOnlyList<T>> ListAllAsync(CancellationToken cancellationToken = default)
+        public async Task<List<T>> ListAllAsync(CancellationToken cancellationToken = default)
         {
             return await _entities.ToListAsync(cancellationToken);
         }
 
-        public async Task<IReadOnlyList<T>> ListAsync(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<T, object>>[]? includesProperties)
+        public async Task<List<T>> ListAsync(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<T, object>>[]? includesProperties)
         {
             IQueryable<T>? query = _entities.AsQueryable();
 

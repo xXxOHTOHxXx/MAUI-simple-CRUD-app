@@ -15,7 +15,7 @@ namespace _253502.Persistence.Repository
             var author = new Author("Абоб Бабоба", DateTime.Parse("12-01-2004"), 69);
             author.Id = 1;
             _authors.Add(author);
-            author = new Author("Бимбим Бом",
+            author = new Author("Бимбим Бамбам",
             DateTime.Parse("18-11-1984"), 420);
             author.Id = 2;
             _authors.Add(author);
@@ -41,12 +41,12 @@ namespace _253502.Persistence.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<Author>> ListAllAsync(CancellationToken cancellationToken = default)
+        public Task<List<Author>> ListAllAsync(CancellationToken cancellationToken = default)
         {
-            return Task.Run(() => _authors as IReadOnlyList<Author>);
+            return Task.Run(() => _authors);
         }
 
-        public Task<IReadOnlyList<Author>> ListAsync(Expression<Func<Author, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<Author, object>>[]? includesProperties)
+        public Task<List<Author>> ListAsync(Expression<Func<Author, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<Author, object>>[]? includesProperties)
         {
             throw new NotImplementedException();
         }
@@ -61,7 +61,7 @@ namespace _253502.Persistence.Repository
     {
         List<Book> _books = new List<Book>();
 
-        public FakeBookRepository()//UNFIN
+        public FakeBookRepository()
         {
             int k = 1;
             for (int i = 1; i <= 2; i++)
@@ -94,15 +94,15 @@ namespace _253502.Persistence.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<Book>> ListAllAsync(CancellationToken cancellationToken = default)
+        public Task<List<Book>> ListAllAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<Book>> ListAsync(Expression<Func<Book, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<Book, object>>[]? includesProperties)
+        public Task<List<Book>> ListAsync(Expression<Func<Book, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<Book, object>>[]? includesProperties)
         {
             IQueryable<Book> data = _books.AsQueryable();
-            return Task.Run(() => data.Where(filter).ToList() as IReadOnlyList<Book>);
+            return Task.Run(() => data.Where(filter).ToList() as List<Book>);
         }
 
         public Task UpdateAsync(Book entity, CancellationToken cancellationToken = default)
