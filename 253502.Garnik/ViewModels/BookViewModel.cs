@@ -40,7 +40,7 @@ namespace _253502.Garnik.ViewModels
 
             try
             {
-                await Shell.Current.GoToAsync("AddOrUpdateBook", parameters);
+                await Shell.Current.GoToAsync(nameof(AddOrUpdateBook), parameters);
             }
             catch (Exception ex)
             {

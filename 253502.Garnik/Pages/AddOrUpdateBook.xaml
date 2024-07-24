@@ -2,11 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="_253502.Garnik.Pages.AddOrUpdateBook"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:converters="clr-namespace:_253502.Garnik.ValueConverters"
              xmlns:models="clr-namespace:_253502.Garnik.ViewModels"
              xmlns:entities="clr-namespace:_253502.Domain.Entities;assembly=253502.Domain"
              x:DataType="models:AddOrUpdateBookViewModel"
              Title="AddOrUpdateBook">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Loaded" 
+                                        Command="{Binding UpdateAuthorPickerCommand}"/>
+    </ContentPage.Behaviors>
     <ContentPage.Resources>
         <converters:RateToColorValueConverter x:Key="RateToColor"/>
         <converters:IsNullConverter x:Key="IsNotNull"/>
@@ -34,8 +39,13 @@
         </VerticalStackLayout>
 
         <VerticalStackLayout>
-            <Label Text="AuthorID"/>
-            <Entry Text="{Binding BookToUpsert.AuthorID}" Placeholder="0"/>
+            <Label Text="Author"/>
+            <Picker x:Name="authorPicker"
+                ItemsSource="{Binding Authors}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding Author, Mode=TwoWay}"
+                Title="Select Author">
+            </Picker>
         </VerticalStackLayout>
 
         <Button Text="Save" Command="{Binding AddOrUpdateBookCommand}"/>

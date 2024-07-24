@@ -22,7 +22,7 @@ namespace _253502.Garnik.ViewModels
         public int AddOrUpdate { get; set; }
 
         [RelayCommand]
-        async void AddOrUpdateAuthor()
+        async Task AddOrUpdateAuthor()
         {
             if (AuthorToUpsert.Name is null || AuthorToUpsert.Name == string.Empty)
             {

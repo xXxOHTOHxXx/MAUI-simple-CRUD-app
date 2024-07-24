@@ -17,6 +17,8 @@ namespace _253502.Garnik.ViewModels
     public partial class AddOrUpdateBookViewModel : ObservableObject
     {
         private readonly IMediator _mediator;
+        public ObservableCollection<Author> Authors { get; set; } = new ObservableCollection<Author>();
+
         public AddOrUpdateBookViewModel(IMediator mediator)
         {
             _mediator = mediator;
@@ -31,8 +33,30 @@ namespace _253502.Garnik.ViewModels
         [ObservableProperty]
         FileResult image;
 
+
         [RelayCommand]
-        public async void PickImage()
+        async Task UpdateAuthorPicker() {
+            try {
+                await GetAuthors();
+            } catch (Exception ex) {
+                Console.WriteLine($"UpdateAythorPicker threw {ex.Message}");
+            }
+        }
+
+        public async Task GetAuthors()//LGTM
+{
+            var authors = await _mediator.Send(new GetAuthorsRequest());
+
+            await MainThread.InvokeOnMainThreadAsync(() => Authors.Clear());
+            await MainThread.InvokeOnMainThreadAsync(() => {
+                foreach (var author in authors)
+                    Authors.Add(author);
+            });
+        }
+
+
+        [RelayCommand]
+        public async Task PickImage()
         {
             var customFileType = new FilePickerFileType(
                 new Dictionary<DevicePlatform, IEnumerable<string>>
@@ -71,21 +95,28 @@ namespace _253502.Garnik.ViewModels
         [RelayCommand]
         async Task AddOrUpdateBook()
         {
-            if (
-                BookToUpsert.InfoData is null ||
-                BookToUpsert.InfoData.Name == string.Empty 
-                )
+            if (BookToUpsert.InfoData is null ||
+                BookToUpsert.InfoData.Name == string.Empty)
             {
                 return;
             }
 
+            var tmp = BookToUpsert.AuthorID;
+            BookToUpsert.AuthorID = author.Id;
+            
+
             if(AddOrUpdate==0)
             {
-                await _mediator.Send(new UpdateBookCommand(BookToUpsert,  BookToUpsert.AuthorID ));
+                try {
+                    await _mediator.Send(new UpdateBookCommand(BookToUpsert, tmp));
+                } catch (Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                }
+                
             }
             else
             {
-                await _mediator.Send(new AddBookCommand(BookToUpsert.InfoData.Name, BookToUpsert.InfoData.DateOfPublishment, BookToUpsert.AuthorID, BookToUpsert.Rating));
+                await _mediator.Send(new AddBookCommand(BookToUpsert.InfoData.Name, BookToUpsert.InfoData.DateOfPublishment, author.Id, BookToUpsert.Rating));
             }
 
             if (Image != null)
@@ -94,7 +125,6 @@ namespace _253502.Garnik.ViewModels
                 var image = ImageSource.FromStream(() => stream);
 
                 string filename = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)), $"{BookToUpsert.Id}.png");
-                //File.SetAttributes(filename, FileAttributes.Normal);
                 try
                 {
                     if(File.Exists(filename))
@@ -113,8 +143,6 @@ namespace _253502.Garnik.ViewModels
                 stream.CopyTo(fileStream);
                 stream.Seek(0, SeekOrigin.Begin);
             }
-
-
             await Shell.Current.GoToAsync("///AuthorsPage");
             
         }

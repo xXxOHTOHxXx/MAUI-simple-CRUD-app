@@ -45,10 +45,10 @@ namespace _253502.Garnik.ViewModels
            
         }
         [RelayCommand]
-        async void AddAuthor() => await GotoAddOrUpdatePage<AddOrUpdateAuthor, Author>(1);
+        async Task AddAuthor() => await GotoAddOrUpdatePage<AddOrUpdateAuthor, Author>(1);
 
         [RelayCommand]
-        async void UpdateAuthor()
+        async Task UpdateAuthor()
         {
             if (SelectedAuthor is not null)
             {
@@ -57,7 +57,7 @@ namespace _253502.Garnik.ViewModels
         }
 
         [RelayCommand]
-        async void AddBook()
+        async Task AddBook()
         {
             if (SelectedAuthor is not null)
             {
@@ -91,7 +91,6 @@ namespace _253502.Garnik.ViewModels
         }
 
 
-        // Команда обновления списка слушателей курса
         [RelayCommand]
         async Task UpdateMembersList() => await GetBooks();
 
@@ -124,8 +123,8 @@ namespace _253502.Garnik.ViewModels
             
         }
 
-        [RelayCommand]//DONT TOUCH
-        async void ShowDetails(Book book) => await GotoDetailsPage(book);
+        [RelayCommand]
+        async Task ShowDetails(Book book) => await GotoDetailsPage(book);
         private async Task GotoDetailsPage(Book book)
         {
             IDictionary<string, object> parameters = new Dictionary<string, object>()
@@ -135,8 +134,6 @@ namespace _253502.Garnik.ViewModels
 
             await Shell.Current.GoToAsync(nameof(BooksPage), parameters);
         }
-
     }
-
 }
 
